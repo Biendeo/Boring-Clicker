@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using buildingClass;
 using buildingTypes;
 
 public class GameData : MonoBehaviour {
@@ -10,14 +11,22 @@ public class GameData : MonoBehaviour {
 	public const double cursorIPU = 1.15;
 
 	public ulong numMoney = 0;
-	Building cursors = new Building(cursorCPH, cursorTPH, cursorCFN, cursorIPU);
 
-	// Use this for initialization
+	Building cursors;
+	
 	void Start() {
 
+		// T
+		Building[] buildings = GetComponents<Building>();
+		for (int i = 0; i < buildings.Length; i++) {
+			switch (buildings[i].name) {
+				case "cursor":
+					cursors = buildings[i];
+					break;
+			}
+		}
 	}
 	
-	// Update is called once per frame
 	void Update() {
 		BuildingUpdate(cursors);
 	}
@@ -30,7 +39,7 @@ public class GameData : MonoBehaviour {
 		if (type == buildingType.cursor) {
 			// Change this so it incorporates different amounts.
 			numMoney -= (ulong)cursors.costForNext;
-            cursors.num += amount;
+            cursors.addToNum(amount);
 		}
 	}
 
@@ -38,7 +47,7 @@ public class GameData : MonoBehaviour {
 		building.timeToHit -= Time.deltaTime;
 
 		if (building.timeToHit <= 0) {
-			numMoney += (ulong)(building.num * building.cashPerHit);
+			numMoney += (ulong)(building.getNum() * building.cashPerHit);
 			building.timeToHit += building.timePerHit;
 		}
 	}
@@ -55,40 +64,15 @@ public class GameData : MonoBehaviour {
 		return bBuyable;
 	}
 
+	// This function gives number of buildings bought based on a given type.
+	// To expand on this, add another case for each type of building.
 	public int getNumOfBuilding(buildingType type) {
-		int num = 0;
-		if (type == buildingType.cursor) {
-			num = cursors.num;
+		switch(type) {
+			case buildingType.cursor:
+				return cursors.getNum();
 		}
-
-		return num;
+		
+		Debug.Log("Something tried to access getNumOfBuilding but didn't specify the type.");
+		return 0;
 	}
 }
-
-public class Building : MonoBehaviour {
-
-	public int num;
-	public int cashPerHit;
-	public int timePerHit;
-	public double timeToHit;
-	public int costForNext;
-	public double increasePerUnit;
-
-	public Building(int CPH, int TPH, int CFN, double IPU) {
-		num = 0;
-		cashPerHit = CPH;
-		timePerHit = TPH;
-		increasePerUnit = IPU;
-		timeToHit = timePerHit;
-		costForNext = CFN;
-	}
-
-	void Start() {
-
-	}
-	
-	void Update() {
-
-	}
-}
-
