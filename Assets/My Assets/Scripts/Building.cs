@@ -9,15 +9,16 @@ namespace buildingClass {
 		public string pluralName;
 
 		public int cashPerHit;
-		public int timePerHit;
+		public double timePerHit;
 		public double timeToHit;
-		public int costForNext; // I'm debating making this costForFirst, and then making a function to just return the value I want for this.
+		public int costForFirst;
 		public double increasePerUnit;
 
 		int num;
 
 		void Start() {
 			num = 0;
+			timeToHit = timePerHit;
 		}
 
 		void Update() {
@@ -37,16 +38,24 @@ namespace buildingClass {
 			return cashPerHit;
 		}
 
-		public int getTimePerHit() {
+		public double getTimePerHit() {
 			return timePerHit;
 		}
 
 		public double getTimeToHit() {
 			return timeToHit;
 		}
+		
+		// This function returns how much it will cost to buy an amount of buildings.
+		// The formula is cost = firstCost * (increase ^ num).
+		public ulong getCostForNext(int amount) {
+			ulong cost = 0;
 
-		public int getcostForNext() {
-			return cashPerHit;
+			for (int i = 0; i < amount;  i++) {
+				cost += (ulong)(costForFirst * Mathf.Pow((float)getIncreasePerUnit(), getNum() + i));
+            }
+
+			return cost;
 		}
 
 		public double getIncreasePerUnit() {
