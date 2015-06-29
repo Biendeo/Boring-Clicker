@@ -17,9 +17,13 @@ public class GameData : MonoBehaviour {
 		// TODO Make these names defined somewhere.
 		Building[] buildings = GetComponents<Building>();
 		for (int i = 0; i < buildings.Length; i++) {
-			switch (buildings[i].name) {
+			switch (buildings[i].editorName) {
 				case "cursor":
 					cursors = buildings[i];
+					Debug.Log("Cursor detected.");
+					break;
+				default:
+					Debug.LogWarning("buildings[" + i + "] did not match anything.");
 					break;
 			}
 		}
@@ -43,6 +47,9 @@ public class GameData : MonoBehaviour {
 				// TODO Change this so it incorporates different amounts.
 				numMoney -= (ulong)cursors.costForNext;
 				cursors.addToNum(amount);
+				break;
+			default:
+				Debug.LogWarning("Something tried to access IncrementBuilding but didn't specify the type.");
 				break;
 		}
 	}
@@ -69,6 +76,7 @@ public class GameData : MonoBehaviour {
 					return false;
 				}
 			default:
+				Debug.LogWarning("Something tried to access bIsitBuyable but didn't specify the type.");
 				return false;
 		}
 	}
@@ -80,7 +88,7 @@ public class GameData : MonoBehaviour {
 			case buildingType.cursor:
 				return cursors.getNum();
 			default:
-				Debug.Log("Something tried to access getNumOfBuilding but didn't specify the type.");
+				Debug.LogWarning("Something tried to access getNumOfBuilding but didn't specify the type.");
 				return 0;
 		}
 		
@@ -91,6 +99,7 @@ public class GameData : MonoBehaviour {
 			case buildingType.cursor:
 				return cursors.printName();
 			default:
+				Debug.LogWarning("Something tried to access printBuildingName but didn't specify the type.");
 				return "";
 		}
 	}
