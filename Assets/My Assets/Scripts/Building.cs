@@ -46,8 +46,14 @@ namespace buildingClass {
 			return timeToHit;
 		}
 		
-		public int getCostForNext() {
-			return (int)(costForFirst * Mathf.Pow((float)getIncreasePerUnit(), getNum()));
+		public ulong getCostForNext(int amount) {
+			ulong cost = 0;
+
+			for (int i = 0; i < amount;  i++) {
+				cost += (ulong)(costForFirst * Mathf.Pow((float)getIncreasePerUnit(), getNum() + i));
+            }
+
+			return cost;
 		}
 
 		public double getIncreasePerUnit() {

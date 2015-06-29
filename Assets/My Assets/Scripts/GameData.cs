@@ -45,7 +45,7 @@ public class GameData : MonoBehaviour {
 		switch (type) {
 			case buildingType.cursor:
 				// TODO Change this so it incorporates different amounts.
-				numMoney -= (ulong)cursors.getCostForNext();
+				numMoney -= cursors.getCostForNext(amount);
 				cursors.addToNum(amount);
 				break;
 			default:
@@ -70,7 +70,7 @@ public class GameData : MonoBehaviour {
 		// TODO Calculate multiple buildings rather than just one.
 		switch (type) {
 			case buildingType.cursor:
-				if (numMoney >= (ulong)cursors.getCostForNext()) {
+				if (numMoney >= cursors.getCostForNext(amount)) {
 					return true;
 				} else {
 					return false;
