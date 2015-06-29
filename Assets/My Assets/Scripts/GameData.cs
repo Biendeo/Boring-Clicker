@@ -9,6 +9,7 @@ public class GameData : MonoBehaviour {
 	public ulong numMoney = 0;
 
 	Building cursors;
+	Building grandmas;
 	
 	void Start() {
 
@@ -22,6 +23,10 @@ public class GameData : MonoBehaviour {
 					cursors = buildings[i];
 					Debug.Log("Cursor detected.");
 					break;
+				case "grandma":
+					grandmas = buildings[i];
+					Debug.Log("Grandmas detected.");
+					break;
 				default:
 					Debug.LogWarning("buildings[" + i + "] did not match anything.");
 					break;
@@ -33,6 +38,7 @@ public class GameData : MonoBehaviour {
 	void Update() {
 		// TODO Normalise the per-frame operation.
 		BuildingUpdate(cursors);
+		BuildingUpdate(grandmas);
 	}
 
 	// This function increases the amount of money the player owns by an amount.
@@ -44,9 +50,12 @@ public class GameData : MonoBehaviour {
 	public void IncrementBuilding(int amount, buildingType type) {
 		switch (type) {
 			case buildingType.cursor:
-				// TODO Change this so it incorporates different amounts.
 				numMoney -= cursors.getCostForNext(amount);
 				cursors.addToNum(amount);
+				break;
+			case buildingType.grandma:
+				numMoney -= grandmas.getCostForNext(amount);
+				grandmas.addToNum(amount);
 				break;
 			default:
 				Debug.LogWarning("Something tried to access IncrementBuilding but didn't specify the type.");
@@ -75,6 +84,12 @@ public class GameData : MonoBehaviour {
 				} else {
 					return false;
 				}
+			case buildingType.grandma:
+				if (numMoney >= grandmas.getCostForNext(amount)) {
+					return true;
+				} else {
+					return false;
+				}
 			default:
 				Debug.LogWarning("Something tried to access bIsitBuyable but didn't specify the type.");
 				return false;
@@ -87,6 +102,8 @@ public class GameData : MonoBehaviour {
 		switch (type) {
 			case buildingType.cursor:
 				return cursors.getNum();
+			case buildingType.grandma:
+				return grandmas.getNum();
 			default:
 				Debug.LogWarning("Something tried to access getBuildingNum but didn't specify the type.");
 				return 0;
@@ -99,6 +116,8 @@ public class GameData : MonoBehaviour {
 		switch (type) {
 			case buildingType.cursor:
 				return cursors.getCostForNext(amount);
+			case buildingType.grandma:
+				return grandmas.getCostForNext(amount);
 			default:
 				Debug.LogWarning("Something tried to access getBuildingCostForNext but didn't specify the type.");
 				return 0;
@@ -110,6 +129,8 @@ public class GameData : MonoBehaviour {
 		switch (type) {
 			case buildingType.cursor:
 				return cursors.getCashPerHit();
+			case buildingType.grandma:
+				return grandmas.getCashPerHit();
 			default:
 				Debug.LogWarning("Something tried to access getCashPerHit but didn't specify the type.");
 				return 0;
@@ -121,6 +142,8 @@ public class GameData : MonoBehaviour {
 		switch (type) {
 			case buildingType.cursor:
 				return cursors.getTimeToHit();
+			case buildingType.grandma:
+				return grandmas.getTimeToHit();
 			default:
 				Debug.LogWarning("Something tried to access getBuildingTimeToHit but didn't specify the type.");
 				return 0;
@@ -132,6 +155,8 @@ public class GameData : MonoBehaviour {
 		switch (type) {
 			case buildingType.cursor:
 				return cursors.printName();
+			case buildingType.grandma:
+				return grandmas.printName();
 			default:
 				Debug.LogWarning("Something tried to access printBuildingName but didn't specify the type.");
 				return "";

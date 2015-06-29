@@ -21,6 +21,9 @@ public class BuildingButtonBehavior : MonoBehaviour {
 			case "cursor":
 				type = buildingType.cursor;
 				break;
+			case "grandma":
+				type = buildingType.grandma;
+				break;
 		}
 
 		bBuyable = false;

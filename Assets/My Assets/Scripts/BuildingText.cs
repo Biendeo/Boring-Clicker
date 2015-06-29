@@ -16,6 +16,9 @@ public class BuildingText : MonoBehaviour {
 			case "cursor":
 				type = buildingType.cursor;
 				break;
+			case "grandma":
+				type = buildingType.grandma;
+				break;
 			default:
 				Debug.LogWarning("A building doesn't have a valid name tied to it.");
 				break;
