@@ -5,18 +5,16 @@ using buildingTypes;
 
 public class GameData : MonoBehaviour {
 
-	public const int cursorCPH = 1;
-	public const int cursorTPH = 1;
-	public const int cursorCFN = 20;
-	public const double cursorIPU = 1.15;
-
+	// This is the amount of money the player currently has.
 	public ulong numMoney = 0;
 
 	Building cursors;
 	
 	void Start() {
 
-		// T
+		// This assigns the correct Building components to the variable names.
+		// If you get a buttload of errors, either the building hasn't been implemented here, or the name is spelled wrong.
+		// TODO Make these names defined somewhere.
 		Building[] buildings = GetComponents<Building>();
 		for (int i = 0; i < buildings.Length; i++) {
 			switch (buildings[i].name) {
@@ -25,54 +23,75 @@ public class GameData : MonoBehaviour {
 					break;
 			}
 		}
+
 	}
 	
 	void Update() {
+		// TODO Normalise the per-frame operation.
 		BuildingUpdate(cursors);
 	}
 
+	// This function increases the amount of money the player owns by an amount.
 	public void IncrementMoney(int incrementValue) {
 		numMoney += (ulong)incrementValue;
 	}
 
+	// This function increases the amount of buildings bought by a given amount (and a given type.
 	public void IncrementBuilding(int amount, buildingType type) {
-		if (type == buildingType.cursor) {
-			// Change this so it incorporates different amounts.
-			numMoney -= (ulong)cursors.costForNext;
-            cursors.addToNum(amount);
+		switch (type) {
+			case buildingType.cursor:
+				// TODO Change this so it incorporates different amounts.
+				numMoney -= (ulong)cursors.costForNext;
+				cursors.addToNum(amount);
+				break;
 		}
 	}
 
+	// This function updates the amount of time to the next building hit by the time it took to draw the frame.
+	// If it hits 0, it resets and adds money.
 	public void BuildingUpdate(Building building) {
 		building.timeToHit -= Time.deltaTime;
 
 		if (building.timeToHit <= 0) {
-			numMoney += (ulong)(building.getNum() * building.cashPerHit);
+			IncrementMoney(building.getNum() * building.cashPerHit);
 			building.timeToHit += building.timePerHit;
 		}
 	}
 
+	// This function determines if the player can buy a certain amount of a building.
 	public bool bIsItBuyable(int amount, buildingType type) {
-		bool bBuyable = false;
-
-		if (type == buildingType.cursor) {
-			if (numMoney >= (ulong)cursors.costForNext) {
-				bBuyable = true;
-			}
+		// TODO Calculate multiple buildings rather than just one.
+		switch (type) {
+			case buildingType.cursor:
+				if (numMoney >= (ulong)cursors.costForNext) {
+					return true;
+				} else {
+					return false;
+				}
+			default:
+				return false;
 		}
-
-		return bBuyable;
 	}
 
 	// This function gives number of buildings bought based on a given type.
 	// To expand on this, add another case for each type of building.
 	public int getNumOfBuilding(buildingType type) {
-		switch(type) {
+		switch (type) {
 			case buildingType.cursor:
 				return cursors.getNum();
+			default:
+				Debug.Log("Something tried to access getNumOfBuilding but didn't specify the type.");
+				return 0;
 		}
 		
-		Debug.Log("Something tried to access getNumOfBuilding but didn't specify the type.");
-		return 0;
+	}
+
+	public string printBuildingName(buildingType type) {
+		switch (type) {
+			case buildingType.cursor:
+				return cursors.printName();
+			default:
+				return "";
+		}
 	}
 }
