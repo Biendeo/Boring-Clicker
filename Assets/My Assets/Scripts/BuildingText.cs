@@ -23,6 +23,6 @@ public class BuildingText : MonoBehaviour {
 	}
 	
 	void Update () {
-		comText.text = data.getBuildingNum(type) + " " + data.printBuildingName(type) + " ($" + (data.getBuildingCashPerHit(type) * data.getBuildingNum(type)) + " in " + data.getBuildingTimeToHit(type) + " seconds)";
+		comText.text = data.getBuildingNum(type) + " " + data.printBuildingName(type) + " ($" + (data.getBuildingCashPerHit(type) * data.getBuildingNum(type)) + " in " + data.getBuildingTimeToHit(type).ToString("F2") + " seconds)";
 	}
 }
