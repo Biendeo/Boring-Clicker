@@ -12,8 +12,7 @@ public class BuildingButtonBehavior : MonoBehaviour {
 	public bool bBuyable;
 
 	Image comImage;
-
-	// Use this for initialization
+	
 	void Start () {
 		if (buildingName == "cursor") {
 			type = buildingType.cursor;
@@ -22,7 +21,6 @@ public class BuildingButtonBehavior : MonoBehaviour {
 		comImage = GetComponent<Image>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		bBuyable = data.bIsItBuyable(1, type);
 		if (bBuyable == true) {

@@ -9,20 +9,20 @@ public class BuildingText : MonoBehaviour {
 	public string buildingName;
 	Text comText;
 	buildingType type = buildingType.blank;
-
-	string printString;
-
-	// Use this for initialization
+	
 	void Start () {
 		comText = GetComponent<Text>();
-		if (buildingName == "cursor") {
-			type = buildingType.cursor;
-			printString = "cursors";
+		switch (buildingName) {
+			case "cursor":
+				type = buildingType.cursor;
+				break;
+			default:
+				Debug.LogWarning("A building doesn't have a valid name tied to it.");
+				break;
 		}
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		comText.text = data.getNumOfBuilding(type) + " " + printString;
+		comText.text = data.getNumOfBuilding(type) + " " + data.printBuildingName(type);
 	}
 }

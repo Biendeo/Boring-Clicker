@@ -5,15 +5,14 @@ using System.Collections;
 public class MoneyText : MonoBehaviour {
 
 	public GameData data;
+	public string displayString;
 	Text comText;
-
-	// Use this for initialization
+	
 	void Start () {
 		comText = GetComponent<Text>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		comText.text = "Money: $" + data.numMoney;
+		comText.text = displayString + data.numMoney;
 	}
 }
