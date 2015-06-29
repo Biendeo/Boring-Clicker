@@ -9,15 +9,16 @@ namespace buildingClass {
 		public string pluralName;
 
 		public int cashPerHit;
-		public int timePerHit;
+		public double timePerHit;
 		public double timeToHit;
-		public int costForNext; // I'm debating making this costForFirst, and then making a function to just return the value I want for this.
+		public int costForFirst;
 		public double increasePerUnit;
 
 		int num;
 
 		void Start() {
 			num = 0;
+			timeToHit = timePerHit;
 		}
 
 		void Update() {
@@ -37,16 +38,16 @@ namespace buildingClass {
 			return cashPerHit;
 		}
 
-		public int getTimePerHit() {
+		public double getTimePerHit() {
 			return timePerHit;
 		}
 
 		public double getTimeToHit() {
 			return timeToHit;
 		}
-
-		public int getcostForNext() {
-			return cashPerHit;
+		
+		public int getCostForNext() {
+			return (int)(costForFirst * Mathf.Pow((float)getIncreasePerUnit(), getNum()));
 		}
 
 		public double getIncreasePerUnit() {
