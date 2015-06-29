@@ -83,17 +83,51 @@ public class GameData : MonoBehaviour {
 
 	// This function gives number of buildings bought based on a given type.
 	// To expand on this, add another case for each type of building.
-	public int getNumOfBuilding(buildingType type) {
+	public int getBuildingNum(buildingType type) {
 		switch (type) {
 			case buildingType.cursor:
 				return cursors.getNum();
 			default:
-				Debug.LogWarning("Something tried to access getNumOfBuilding but didn't specify the type.");
+				Debug.LogWarning("Something tried to access getBuildingNum but didn't specify the type.");
 				return 0;
 		}
 		
 	}
 
+	// This function returns the cost of a given building.
+	public ulong getBuildingCostForNext(int amount, buildingType type) {
+		switch (type) {
+			case buildingType.cursor:
+				return cursors.getCostForNext(amount);
+			default:
+				Debug.LogWarning("Something tried to access getBuildingCostForNext but didn't specify the type.");
+				return 0;
+		}
+	}
+
+	// This function returns the cash per hit of a given building
+	public int getBuildingCashPerHit(buildingType type) {
+		switch (type) {
+			case buildingType.cursor:
+				return cursors.getCashPerHit();
+			default:
+				Debug.LogWarning("Something tried to access getCashPerHit but didn't specify the type.");
+				return 0;
+		}
+	}
+
+	// This function returns the name of a given building type.
+	public double getBuildingTimeToHit(buildingType type) {
+		switch (type) {
+			case buildingType.cursor:
+				return cursors.getTimeToHit();
+			default:
+				Debug.LogWarning("Something tried to access getBuildingTimeToHit but didn't specify the type.");
+				return 0;
+		}
+	}
+
+	// This function returns the name of a given building type.
 	public string printBuildingName(buildingType type) {
 		switch (type) {
 			case buildingType.cursor:

@@ -7,22 +7,28 @@ public class BuildingButtonBehavior : MonoBehaviour {
 
 	public GameData data;
 	public string buildingName;
-	buildingType type = buildingType.blank;
+
+	public int buyAmount;
 
 	public bool bBuyable;
+
+	buildingType type = buildingType.blank;
 
 	Image comImage;
 	
 	void Start () {
-		if (buildingName == "cursor") {
-			type = buildingType.cursor;
+		switch (buildingName) {
+			case "cursor":
+				type = buildingType.cursor;
+				break;
 		}
+
 		bBuyable = false;
 		comImage = GetComponent<Image>();
 	}
 	
 	void Update () {
-		bBuyable = data.bIsItBuyable(1, type);
+		bBuyable = data.bIsItBuyable(buyAmount, type);
 		if (bBuyable == true) {
 			comImage.color = Color.white;
 		} else if (bBuyable == false) {
@@ -32,7 +38,11 @@ public class BuildingButtonBehavior : MonoBehaviour {
 
 	public void OnClick() {
 		if (bBuyable == true) {
-			data.IncrementBuilding(1, type);
+			data.IncrementBuilding(buyAmount, type);
 		}
+	}
+
+	public buildingType getBuildingType() {
+		return type;
 	}
 }

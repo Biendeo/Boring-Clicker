@@ -46,6 +46,8 @@ namespace buildingClass {
 			return timeToHit;
 		}
 		
+		// This function returns how much it will cost to buy an amount of buildings.
+		// The formula is cost = firstCost * (increase ^ num).
 		public ulong getCostForNext(int amount) {
 			ulong cost = 0;
 
