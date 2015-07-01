@@ -9,10 +9,10 @@ namespace buildingClass {
 		public string pluralName;
 
 		public int cashPerHit;
-		public double timePerHit;
-		public double timeToHit;
+		public float timePerHit;
+		public float timeToHit;
 		public int costForFirst;
-		public double increasePerUnit;
+		public float increasePerUnit;
 
 		int num;
 
@@ -38,11 +38,11 @@ namespace buildingClass {
 			return cashPerHit;
 		}
 
-		public double getTimePerHit() {
+		public float getTimePerHit() {
 			return timePerHit;
 		}
 
-		public double getTimeToHit() {
+		public float getTimeToHit() {
 			return timeToHit;
 		}
 		
@@ -58,7 +58,7 @@ namespace buildingClass {
 			return cost;
 		}
 
-		public double getIncreasePerUnit() {
+		public float getIncreasePerUnit() {
 			return increasePerUnit;
 		}
 

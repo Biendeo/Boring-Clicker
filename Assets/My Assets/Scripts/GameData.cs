@@ -65,11 +65,13 @@ public class GameData : MonoBehaviour {
 	// This function updates the amount of time to the next building hit by the time it took to draw the frame.
 	// If it hits 0, it resets and adds money.
 	public void BuildingUpdate(Building building) {
-		building.timeToHit -= Time.deltaTime;
+		if (building.getNum() > 0) {
+			building.timeToHit -= Time.deltaTime;
 
-		if (building.timeToHit <= 0) {
-			IncrementMoney(building.getNum() * building.cashPerHit);
-			building.timeToHit += building.timePerHit;
+			if (building.timeToHit <= 0) {
+				IncrementMoney(building.getNum() * building.cashPerHit);
+				building.timeToHit += building.timePerHit;
+			}
 		}
 	}
 

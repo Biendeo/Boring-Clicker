@@ -75,6 +75,7 @@
     <Compile Include="Assets\My Assets\Scripts\MoneyText.cs" />
     <Compile Include="Assets\My Assets\Scripts\Sidebar.cs" />
     <Compile Include="Assets\My Assets\Scripts\SidebarButton.cs" />
+    <Compile Include="Assets\My Assets\Scripts\Stats.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
