@@ -68,6 +68,7 @@
     <Compile Include="Assets\My Assets\Scripts\Building.cs" />
     <Compile Include="Assets\My Assets\Scripts\BuildingButtonBehavior.cs" />
     <Compile Include="Assets\My Assets\Scripts\BuildingButtonText.cs" />
+    <Compile Include="Assets\My Assets\Scripts\BuildingDisplay.cs" />
     <Compile Include="Assets\My Assets\Scripts\BuildingText.cs" />
     <Compile Include="Assets\My Assets\Scripts\BuildingTypes.cs" />
     <Compile Include="Assets\My Assets\Scripts\GameData.cs" />

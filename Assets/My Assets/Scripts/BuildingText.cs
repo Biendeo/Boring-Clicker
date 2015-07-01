@@ -7,11 +7,27 @@ public class BuildingText : MonoBehaviour {
 
 	public GameData data;
 	public string buildingName;
-	Text comText;
+	Text textName;
+	Text textMoney;
+	Text textTime;
 	buildingType type = buildingType.blank;
 	
 	void Start () {
-		comText = GetComponent<Text>();
+		Text[] textElements = GetComponentsInChildren<Text>();
+		for (int i = 0; i < textElements.Length; i++) {
+			switch (textElements[i].text) {
+				case "BUILDING TEXT":
+					textName = textElements[i];
+					break;
+				case "$1":
+					textMoney = textElements[i];
+					break;
+				case "50.0s":
+					textTime = textElements[i];
+					break;
+			}
+		}
+
 		switch (buildingName) {
 			case "cursor":
 				type = buildingType.cursor;
@@ -26,6 +42,8 @@ public class BuildingText : MonoBehaviour {
 	}
 	
 	void Update () {
-		comText.text = data.getBuildingNum(type) + " " + data.printBuildingName(type) + " ($" + (data.getBuildingCashPerHit(type) * data.getBuildingNum(type)) + " in " + data.getBuildingTimeToHit(type).ToString("F2") + " seconds)";
+		textName.text = data.getBuildingNum(type) + " " + data.printBuildingName(type);
+		textMoney.text = "$" + (data.getBuildingCashPerHit(type) * data.getBuildingNum(type));
+		textTime.text = data.getBuildingTimeToHit(type).ToString("F1") + "s";
 	}
 }
