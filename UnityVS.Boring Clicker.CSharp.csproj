@@ -7,16 +7,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0DB5DA95-B0A6-20A8-1FEB-23CBC0146A2C}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebGL:20</UnityBuildTarget>
     <UnityVersion>5.1.1f1</UnityVersion>
@@ -67,7 +65,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\My Assets\Scripts\SidebarButton.cs" />
     <Compile Include="Assets\My Assets\Scripts\Building.cs" />
     <Compile Include="Assets\My Assets\Scripts\BuildingButtonBehavior.cs" />
     <Compile Include="Assets\My Assets\Scripts\BuildingButtonText.cs" />
@@ -75,6 +72,8 @@
     <Compile Include="Assets\My Assets\Scripts\BuildingTypes.cs" />
     <Compile Include="Assets\My Assets\Scripts\GameData.cs" />
     <Compile Include="Assets\My Assets\Scripts\MoneyText.cs" />
+    <Compile Include="Assets\My Assets\Scripts\Sidebar.cs" />
+    <Compile Include="Assets\My Assets\Scripts\SidebarButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

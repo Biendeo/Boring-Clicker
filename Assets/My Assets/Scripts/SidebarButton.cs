@@ -16,18 +16,32 @@ public class SidebarButton : MonoBehaviour {
 	Text comText;
 	Image comImage;
 
-	void Start () {
+	void Start() {
 		comText = GetComponentInChildren<Text>();
 		comImage = GetComponent<Image>();
 	}
-	
-	void Update () {
-	
+
+	void Update() {
+
 	}
 
 	public void OnClick() {
+
+		Sidebar sidebar = GetComponentInParent<Sidebar>();
+
+		bool bTemporarySave = bMenuOpen;
+
+		sidebar.TurnOffMenus();
+
+		bMenuOpen = bTemporarySave;
+
 		Toggle();
 
+		MenuToggle();
+
+	}
+
+	public void MenuToggle() {
 		switch (bMenuOpen) {
 			case true:
 				comText.text = closeText;
@@ -54,6 +68,10 @@ public class SidebarButton : MonoBehaviour {
 				break;
 		}
 
+		return bMenuOpen;
+	}
+
+	public bool GetState() {
 		return bMenuOpen;
 	}
 }
