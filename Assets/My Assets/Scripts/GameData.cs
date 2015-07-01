@@ -4,7 +4,6 @@ using buildingClass;
 using buildingTypes;
 
 public class GameData : MonoBehaviour {
-
 	// This is the amount of money the player currently has.
 	public ulong numMoney = 0;
 
