@@ -17,14 +17,7 @@ public class BuildingButtonBehavior : MonoBehaviour {
 	Image comImage;
 	
 	void Start () {
-		switch (buildingName) {
-			case "cursor":
-				type = buildingType.cursor;
-				break;
-			case "grandma":
-				type = buildingType.grandma;
-				break;
-		}
+		type = data.NameToType(buildingName);
 
 		bBuyable = false;
 		comImage = GetComponent<Image>();

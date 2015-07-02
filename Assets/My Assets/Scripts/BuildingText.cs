@@ -27,18 +27,8 @@ public class BuildingText : MonoBehaviour {
 					break;
 			}
 		}
-
-		switch (buildingName) {
-			case "cursor":
-				type = buildingType.cursor;
-				break;
-			case "grandma":
-				type = buildingType.grandma;
-				break;
-			default:
-				Debug.LogWarning("A building doesn't have a valid name tied to it.");
-				break;
-		}
+		
+        type = data.NameToType(buildingName);
 	}
 	
 	void Update () {

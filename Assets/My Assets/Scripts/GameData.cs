@@ -6,59 +6,19 @@ using buildingTypes;
 public class GameData : MonoBehaviour {
 	// This is the amount of money the player currently has.
 	public ulong numMoney = 0;
-
-	Building cursors;
-	Building grandmas;
+	
+	// This tracks the building components that are also in this gameObject.
+	// Add buildings by attaching the component, and adding necessary parts to NameToType() and TypeToName().
+	// Also add a type to BuildingTypes.cs.
+	Building[] buildings;
 	
 	void Start() {
-
-		// This assigns the correct Building components to the variable names.
-		// If you get a buttload of errors, either the building hasn't been implemented here, or the name is spelled wrong.
-		// TODO Make these names defined somewhere.
-		Building[] buildings = GetComponents<Building>();
-		for (int i = 0; i < buildings.Length; i++) {
-			switch (buildings[i].editorName) {
-				case "cursor":
-					cursors = buildings[i];
-					Debug.Log("Cursor detected.");
-					break;
-				case "grandma":
-					grandmas = buildings[i];
-					Debug.Log("Grandmas detected.");
-					break;
-				default:
-					Debug.LogWarning("buildings[" + i + "] did not match anything.");
-					break;
-			}
-		}
-
+		buildings = GetComponents<Building>();
 	}
 	
 	void Update() {
-		// TODO Normalise the per-frame operation.
-		BuildingUpdate(cursors);
-		BuildingUpdate(grandmas);
-	}
-
-	// This function increases the amount of money the player owns by an amount.
-	public void IncrementMoney(int incrementValue) {
-		numMoney += (ulong)incrementValue;
-	}
-
-	// This function increases the amount of buildings bought by a given amount (and a given type.
-	public void IncrementBuilding(int amount, buildingType type) {
-		switch (type) {
-			case buildingType.cursor:
-				numMoney -= cursors.getCostForNext(amount);
-				cursors.addToNum(amount);
-				break;
-			case buildingType.grandma:
-				numMoney -= grandmas.getCostForNext(amount);
-				grandmas.addToNum(amount);
-				break;
-			default:
-				Debug.LogWarning("Something tried to access IncrementBuilding but didn't specify the type.");
-				break;
+		for (int i = 0; i < buildings.Length; i++) {
+			BuildingUpdate(buildings[i]);
 		}
 	}
 
@@ -75,92 +35,101 @@ public class GameData : MonoBehaviour {
 		}
 	}
 
-	// This function determines if the player can buy a certain amount of a building.
-	public bool bIsItBuyable(int amount, buildingType type) {
-		// TODO Calculate multiple buildings rather than just one.
+	// This function increases the amount of money the player owns by an amount.
+	public void IncrementMoney(int incrementValue) {
+		numMoney += (ulong)incrementValue;
+	}
+
+	// This function converts the name of a building to its relative buildingType.
+	public buildingType NameToType(string name) {
+		switch (name) {
+			case "cursor":
+				return buildingType.cursor;
+			case "grandma":
+				return buildingType.grandma;
+			default:
+				return buildingType.blank;
+		}
+	}
+
+	// This function converts the buildingType of a building to its relative name.
+	public string TypeToName(buildingType type) {
 		switch (type) {
 			case buildingType.cursor:
-				if (numMoney >= cursors.getCostForNext(amount)) {
-					return true;
-				} else {
-					return false;
-				}
+				return "cursor";
 			case buildingType.grandma:
-				if (numMoney >= grandmas.getCostForNext(amount)) {
-					return true;
-				} else {
-					return false;
-				}
+				return "grandma";
 			default:
-				Debug.LogWarning("Something tried to access bIsitBuyable but didn't specify the type.");
-				return false;
+				return "null";
+		}
+	}
+
+	// This function converts a type to the specific index of where it is stored.
+	int BuildingTypeToIndex(buildingType type) {
+		int index = -1;
+		for (int i = 0; i < buildings.Length; i++) {
+			if (buildings[i].editorName == TypeToName(type)) {
+				index = i;
+				break;
+			}
+		}
+
+		return index;
+	}
+
+	// This function increases the amount of buildings bought by a given amount (and a given type.
+	public void IncrementBuilding(int amount, buildingType type) {
+		int index = BuildingTypeToIndex(type);
+
+		numMoney -= buildings[index].getCostForNext(amount);
+		buildings[index].addToNum(amount);
+	}
+
+
+	// This function determines if the player can buy a certain amount of a building.
+	public bool bIsItBuyable(int amount, buildingType type) {
+		int index = BuildingTypeToIndex(type);
+
+		if (numMoney >= buildings[index].getCostForNext(amount)) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	// This function gives number of buildings bought based on a given type.
 	// To expand on this, add another case for each type of building.
 	public int getBuildingNum(buildingType type) {
-		switch (type) {
-			case buildingType.cursor:
-				return cursors.getNum();
-			case buildingType.grandma:
-				return grandmas.getNum();
-			default:
-				Debug.LogWarning("Something tried to access getBuildingNum but didn't specify the type.");
-				return 0;
-		}
-		
+		int index = BuildingTypeToIndex(type);
+
+		return buildings[index].getNum();
 	}
 
 	// This function returns the cost of a given building.
 	public ulong getBuildingCostForNext(int amount, buildingType type) {
-		switch (type) {
-			case buildingType.cursor:
-				return cursors.getCostForNext(amount);
-			case buildingType.grandma:
-				return grandmas.getCostForNext(amount);
-			default:
-				Debug.LogWarning("Something tried to access getBuildingCostForNext but didn't specify the type.");
-				return 0;
-		}
+		int index = BuildingTypeToIndex(type);
+
+		return buildings[index].getCostForNext(amount);
 	}
 
 	// This function returns the cash per hit of a given building
 	public int getBuildingCashPerHit(buildingType type) {
-		switch (type) {
-			case buildingType.cursor:
-				return cursors.getCashPerHit();
-			case buildingType.grandma:
-				return grandmas.getCashPerHit();
-			default:
-				Debug.LogWarning("Something tried to access getCashPerHit but didn't specify the type.");
-				return 0;
-		}
+		int index = BuildingTypeToIndex(type);
+
+		return buildings[index].getCashPerHit();
 	}
 
 	// This function returns the name of a given building type.
 	public double getBuildingTimeToHit(buildingType type) {
-		switch (type) {
-			case buildingType.cursor:
-				return cursors.getTimeToHit();
-			case buildingType.grandma:
-				return grandmas.getTimeToHit();
-			default:
-				Debug.LogWarning("Something tried to access getBuildingTimeToHit but didn't specify the type.");
-				return 0;
-		}
+		int index = BuildingTypeToIndex(type);
+
+		return buildings[index].getTimeToHit();
 	}
 
 	// This function returns the name of a given building type.
 	public string printBuildingName(buildingType type) {
-		switch (type) {
-			case buildingType.cursor:
-				return cursors.printName();
-			case buildingType.grandma:
-				return grandmas.printName();
-			default:
-				Debug.LogWarning("Something tried to access printBuildingName but didn't specify the type.");
-				return "";
-		}
+		int index = BuildingTypeToIndex(type);
+
+		return buildings[index].printName();
 	}
 }
