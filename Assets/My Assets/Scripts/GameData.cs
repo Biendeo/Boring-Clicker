@@ -11,6 +11,11 @@ public class GameData : MonoBehaviour {
 	// Add buildings by attaching the component, and adding necessary parts to NameToType() and TypeToName().
 	// Also add a type to BuildingTypes.cs.
 	Building[] buildings;
+
+	ulong totalMoney = 0;
+	float totalTime = 0;
+	ulong totalBuildings = 0;
+	ulong totalHits = 0;
 	
 	void Start() {
 		buildings = GetComponents<Building>();
@@ -20,6 +25,8 @@ public class GameData : MonoBehaviour {
 		for (int i = 0; i < buildings.Length; i++) {
 			BuildingUpdate(buildings[i]);
 		}
+
+		totalTime += Time.deltaTime;
 	}
 
 	// This function updates the amount of time to the next building hit by the time it took to draw the frame.
@@ -31,6 +38,9 @@ public class GameData : MonoBehaviour {
 			if (building.timeToHit <= 0) {
 				IncrementMoney(building.getNum() * building.cashPerHit);
 				building.timeToHit += building.timePerHit;
+
+				totalMoney += (uint)(building.getNum() * building.cashPerHit);
+				totalHits++;
 			}
 		}
 	}
@@ -38,15 +48,18 @@ public class GameData : MonoBehaviour {
 	// This function increases the amount of money the player owns by an amount.
 	public void IncrementMoney(int incrementValue) {
 		numMoney += (ulong)incrementValue;
+		totalMoney += (ulong)incrementValue;
 	}
 
 	// This function converts the name of a building to its relative buildingType.
 	public buildingType NameToType(string name) {
 		switch (name) {
-			case "cursor":
-				return buildingType.cursor;
-			case "grandma":
-				return buildingType.grandma;
+			case "tier1":
+				return buildingType.tier1;
+			case "tier2":
+				return buildingType.tier2;
+			case "tier3":
+				return buildingType.tier3;
 			default:
 				return buildingType.blank;
 		}
@@ -55,10 +68,12 @@ public class GameData : MonoBehaviour {
 	// This function converts the buildingType of a building to its relative name.
 	public string TypeToName(buildingType type) {
 		switch (type) {
-			case buildingType.cursor:
-				return "cursor";
-			case buildingType.grandma:
-				return "grandma";
+			case buildingType.tier1:
+				return "tier1";
+			case buildingType.tier2:
+				return "tier2";
+			case buildingType.tier3:
+				return "tier3";
 			default:
 				return "null";
 		}
@@ -83,6 +98,8 @@ public class GameData : MonoBehaviour {
 
 		numMoney -= buildings[index].getCostForNext(amount);
 		buildings[index].addToNum(amount);
+
+		totalBuildings++;
 	}
 
 
@@ -131,5 +148,21 @@ public class GameData : MonoBehaviour {
 		int index = BuildingTypeToIndex(type);
 
 		return buildings[index].printName();
+	}
+
+	public ulong getTotalMoney() {
+		return totalMoney;
+	}
+
+	public float getTotalTime() {
+		return totalTime;
+	}
+
+	public ulong getTotalBuildings() {
+		return totalBuildings;
+	}
+
+	public ulong getTotalHits() {
+		return totalHits;
 	}
 }

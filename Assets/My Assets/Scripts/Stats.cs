@@ -4,11 +4,7 @@ using System.Collections;
 
 public class Stats : MonoBehaviour {
 
-	public ulong totalMoney;
-	public uint totalBuildings;
-	public ulong totalHits;
-	public float totalTime;
-
+	public GameData data;
 	Text textTotalMoney;
 	Text textTotalBuildings;
 	Text textTotalHits;
@@ -36,9 +32,12 @@ public class Stats : MonoBehaviour {
 	}
 	
 	void Update () {
-		textTotalMoney.text = "Total Money: $" + totalMoney;
-		textTotalBuildings.text = "Total Buildings: " + totalBuildings;
-		textTotalHits.text = "Total Cash Hits: " + totalHits;
-		textTotalTime.text = "Total Time Playing: " + totalTime;
+
+
+
+		textTotalMoney.text = "Total Money: $" + data.getTotalMoney();
+		textTotalBuildings.text = "Total Buildings: " + data.getTotalBuildings();
+		textTotalHits.text = "Total Cash Hits: " + data.getTotalHits();
+		textTotalTime.text = "Total Time Playing: " + (ulong)data.getTotalTime() + "s";
 	}
 }

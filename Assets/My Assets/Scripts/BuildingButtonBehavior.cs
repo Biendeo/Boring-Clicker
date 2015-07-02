@@ -6,7 +6,6 @@ using buildingTypes;
 public class BuildingButtonBehavior : MonoBehaviour {
 
 	public GameData data;
-	public string buildingName;
 
 	public int buyAmount;
 
@@ -17,7 +16,8 @@ public class BuildingButtonBehavior : MonoBehaviour {
 	Image comImage;
 	
 	void Start () {
-		type = data.NameToType(buildingName);
+		BuildingText parentElement = GetComponentInParent<BuildingText>();
+		type = data.NameToType(parentElement.buildingName);
 
 		bBuyable = false;
 		comImage = GetComponent<Image>();

@@ -52,7 +52,7 @@ namespace buildingClass {
 			ulong cost = 0;
 
 			for (int i = 0; i < amount;  i++) {
-				cost += (ulong)(costForFirst * Mathf.Pow((float)getIncreasePerUnit(), getNum() + i));
+				cost += (ulong)(costForFirst * Mathf.Pow(getIncreasePerUnit(), getNum() + i));
             }
 
 			return cost;

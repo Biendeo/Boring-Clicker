@@ -1,7 +1,8 @@
 ﻿namespace buildingTypes {
 	public enum buildingType {
 		blank = 0,
-		cursor,
-		grandma
+		tier1,
+		tier2,
+		tier3
 	};
 };
