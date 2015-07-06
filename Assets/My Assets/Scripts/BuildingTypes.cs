@@ -3,6 +3,7 @@
 		blank = 0,
 		tier1,
 		tier2,
-		tier3
+		tier3,
+		all
 	};
 };

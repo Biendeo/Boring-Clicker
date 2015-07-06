@@ -60,6 +60,8 @@ public class GameData : MonoBehaviour {
 				return buildingType.tier2;
 			case "tier3":
 				return buildingType.tier3;
+			case "all":
+				return buildingType.all;
 			default:
 				return buildingType.blank;
 		}
@@ -100,6 +102,12 @@ public class GameData : MonoBehaviour {
 		buildings[index].addToNum(amount);
 
 		totalBuildings++;
+	}
+
+	public void MultiplyBuildingCPH(int amount, buildingType type) {
+		int index = BuildingTypeToIndex(type);
+
+		buildings[index].MultiplyCPH(amount);
 	}
 
 

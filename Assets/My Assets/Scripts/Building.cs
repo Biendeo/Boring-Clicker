@@ -30,6 +30,10 @@ namespace buildingClass {
 			return num;
 		}
 
+		public void MultiplyCPH(int amount) {
+			cashPerHit *= amount;
+		}
+
 		public int getNum() {
 			return num;
 		}
